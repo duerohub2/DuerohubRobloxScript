@@ -5,9 +5,17 @@ import { formatDate, truncate } from '@/lib/utils';
 import type { Database } from '@/types/database';
 
 type Script = Database['public']['Tables']['scripts']['Row'] & {
-  games?: { name: string; slug: string } | null;
-  users?: { username: string; avatar_url: string | null } | null;
+  games?: { name: string; slug: string } | { name: string; slug: string }[] | null;
+  users?: { username: string; avatar_url: string | null } | { username: string; avatar_url: string | null }[] | null;
 };
+
+function getGameName(games: Script['games']) {
+  return Array.isArray(games) ? games[0]?.name : games?.name;
+}
+
+function getUsername(users: Script['users']) {
+  return Array.isArray(users) ? users[0]?.username : users?.username;
+}
 
 export default function ScriptCard({ script }: { script: Script }) {
   return (
@@ -23,12 +31,12 @@ export default function ScriptCard({ script }: { script: Script }) {
         <p className="font-heading text-sm text-textdim">{truncate(script.description, 100)}</p>
 
         <div className="mt-auto pt-3 border-t-[2px] border-dark flex items-center justify-between font-mono text-[10px] uppercase text-textdim">
-          <span>{script.games?.name ?? 'No Game'}</span>
+          <span>{getGameName(script.games) ?? 'No Game'}</span>
           <span>{formatDate(script.created_at)}</span>
         </div>
 
         <div className="flex items-center justify-between font-mono text-[10px] uppercase text-textdim">
-          <span>by {script.users?.username ?? 'unknown'}</span>
+          <span>by {getUsername(script.users) ?? 'unknown'}</span>
           <span>
             {script.view_count} views · {script.copy_count} copies
           </span>
