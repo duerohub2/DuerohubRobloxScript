@@ -9,7 +9,11 @@ export const revalidate = 60;
 
 const PAGE_SIZE = 12;
 
-const SORT_MAP: Record<string, { column: string; ascending: boolean }> = {
+type SortConfig = { column: string; ascending: boolean };
+
+const DEFAULT_SORT: SortConfig = { column: 'created_at', ascending: false };
+
+const SORT_MAP: Record<string, SortConfig> = {
   newest: { column: 'created_at', ascending: false },
   popular: { column: 'view_count', ascending: false },
   copied: { column: 'copy_count', ascending: false },
@@ -37,7 +41,7 @@ export default async function GameDetailPage({ params, searchParams }: GamePageP
     .order('display_order');
 
   const page = Math.max(1, parseInt(searchParams.page ?? '1', 10) || 1);
-  const sort = SORT_MAP[searchParams.sort ?? 'newest'] ?? SORT_MAP.newest;
+  const sort = (searchParams.sort && SORT_MAP[searchParams.sort]) || DEFAULT_SORT;
   const from = (page - 1) * PAGE_SIZE;
   const to = from + PAGE_SIZE - 1;
 
