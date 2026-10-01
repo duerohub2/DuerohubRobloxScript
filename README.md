@@ -15,4 +15,4 @@ Next.js 14.2.x (App Router) · TypeScript 5.4.x (strict) · Tailwind CSS 3.4.x �
    ```bash
    pnpm install
    cp .env.example .env.local   # fill in the 3 Supabase values + IP_HASH_SALT + NEXT_PUBLIC_SITE_URL
-   pnpm dev
+   pnpm dev 
