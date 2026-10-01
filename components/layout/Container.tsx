@@ -1,0 +1,13 @@
+import { HTMLAttributes } from 'react';
+
+export default function Container({
+  className = '',
+  children,
+  ...props
+}: HTMLAttributes<HTMLDivElement>) {
+  return (
+    <div className={`w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 ${className}`} {...props}>
+      {children}
+    </div>
+  );
+}
