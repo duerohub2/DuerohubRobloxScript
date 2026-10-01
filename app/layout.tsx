@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import { Archivo_Black, Space_Grotesk, JetBrains_Mono } from 'next/font/google';
 import { Toaster } from 'sonner';
+import { Header } from '@/components/layout/Header';
 import './globals.css';
 
 const archivoBlack = Archivo_Black({
@@ -41,6 +42,7 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${archivoBlack.variable} ${spaceGrotesk.variable} ${jetbrainsMono.variable}`}>
       <body>
+        <Header />
         {children}
         <Toaster
           position="bottom-right"
